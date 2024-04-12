@@ -6,13 +6,13 @@ spring:
         protocol: SASL_SSL
       sasl:
         jaas:
-          config: org.apache.kafka.common.security.plain.PlainLoginModule required username={KEY} password={SECRET};
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='{KEY}' password='{SECRET}';
         mechanism: PLAIN
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
-      group-id: group_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: group_id

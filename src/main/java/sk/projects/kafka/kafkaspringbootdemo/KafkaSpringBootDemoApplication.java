@@ -14,6 +14,13 @@ import org.springframework.kafka.listener.MessageListenerContainer;
 public class KafkaSpringBootDemoApplication {
 
     private final AccountDetailsProducer producer;
+    @Autowired
+    KafkaSpringBootDemoApplication(AccountDetailsProducer producer) {
+        this.producer = producer;
+    }
+
+    private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry = new KafkaListenerEndpointRegistry();
+
 
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(KafkaSpringBootDemoApplication.class);
@@ -28,19 +35,11 @@ public class KafkaSpringBootDemoApplication {
                 switch (arg) {
                     case "--producer" -> {
                         this.producer.sendMessage("awalther", "t-shirts");
-                        this.producer.sendMessage("htanaka", "t-shirts");
-                        this.producer.sendMessage("htanaka", "batteries");
-                        this.producer.sendMessage("eabara", "t-shirts");
-                        this.producer.sendMessage("htanaka", "t-shirts");
-                        this.producer.sendMessage("jsmith", "book");
-                        this.producer.sendMessage("awalther", "t-shirts");
-                        this.producer.sendMessage("jsmith", "batteries");
-                        this.producer.sendMessage("jsmith", "gift card");
-                        this.producer.sendMessage("eabara", "t-shirts");
+                        this.producer.sendMessage("awalther-1", "pants");
                     }
                     case "--consumer" -> {
-                        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer("myConsumer");
-                        listenerContainer.start();
+                        MessageListenerContainer listenerContainer = this.kafkaListenerEndpointRegistry.getListenerContainer("topic6Consumer");
+                            listenerContainer.start();
                     }
                     default -> {
                     }
@@ -48,13 +47,4 @@ public class KafkaSpringBootDemoApplication {
             }
         };
     }
-
-    @Autowired
-    KafkaSpringBootDemoApplication(AccountDetailsProducer producer) {
-        this.producer = producer;
-    }
-
-    @Autowired
-    private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-
 }

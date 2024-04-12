@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountDetailsConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(AccountDetailsConsumer.class);
 
-    @KafkaListener(id = "account_consumer", topics = "account_details", groupId = "retail_sedt", autoStartup = "false")
+    @KafkaListener(id = "topic6Consumer", topics = "topic_6", clientIdPrefix = "topic6Client" ,groupId = "topic6_group")
     public void listen(String value,
                        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                        @Header(KafkaHeaders.RECEIVED_KEY) String key) {
